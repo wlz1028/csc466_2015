@@ -8,7 +8,7 @@ public class TrafficSink {
   public static void main(String[] args) throws IOException {
 
     DatagramSocket socket = new DatagramSocket(4444);
-    byte[] buf = new byte[256];
+    byte[] buf = new byte[1000];
     DatagramPacket p = new DatagramPacket(buf, buf.length);
     socket.receive(p);
 
