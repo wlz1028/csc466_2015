@@ -31,7 +31,7 @@ class ReadFileWriteFile {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("data.txt"); 
+			File fin = new File("movietrace.data"); 
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  
 			
