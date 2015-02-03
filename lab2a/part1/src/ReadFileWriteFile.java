@@ -18,6 +18,13 @@ class ReadFileWriteFile {
 		BufferedReader bis = null; 
 		String currentLine = null; 
 		PrintStream pout = null;
+
+        int I_frame_size = 0;
+        int I_frame_no = 0;
+        int P_frame_size = 0;
+        int P_frame_no = 0;
+        int B_frame_size = 0;
+        int B_frame_no = 0;
 		
 		try {  
 			
@@ -54,7 +61,24 @@ class ReadFileWriteFile {
 				float Ftime 	= Float.parseFloat(col2);
 				String Ftype 	= col3;
 				int Fsize 	= Integer.parseInt(col4);
-				
+
+                int avgFrameSize = 0;
+                //Get average frame size
+                if (Ftype.equals("I"))
+                {
+                    I_frame_no += 1;
+                    I_frame_size += Fsize;
+                    avgFrameSize = I_frame_size / I_frame_no;
+                } else if (Ftype.equals("P")) {
+                    P_frame_no += 1;
+                    P_frame_size += Fsize;
+                    avgFrameSize = P_frame_size / P_frame_no;
+                } else {
+                    B_frame_no += 1;
+                    B_frame_size += Fsize;
+                    avgFrameSize = B_frame_size / B_frame_no;
+                }
+
 				
 				/*
 				 *  Display content of file 
@@ -62,13 +86,14 @@ class ReadFileWriteFile {
 				System.out.println("SeqNo:  " + SeqNo); 
 				System.out.println("Frame time:   " + Ftime); 
 				System.out.println("Frame type:        " + Ftype); 
-				System.out.println("Frame size:       " + Fsize + "\n"); 
+				System.out.println("Frame size:       " + Fsize); 
+				System.out.println("Frame average size: " + avgFrameSize + "\n");
 				
 				
 				/*
 				 *  Write line to output file 
 				 */
-				pout.println(SeqNo+ "\t"+  Ftime + "\t" + Ftype + "\t" + Fsize); 
+				pout.println(SeqNo+ "\t"+  Ftime + "\t" + Ftype + "\t" + Fsize + "\t"+ avgFrameSize); 
 				
 			} 
 		} catch (IOException e) {  
