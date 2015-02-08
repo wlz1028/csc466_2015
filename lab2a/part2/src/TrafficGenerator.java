@@ -19,16 +19,15 @@ class TrafficGenerator {
 		String currentLine = null; 
 		PrintStream pout = null;
 
-                int I_frame_size = 0;
-                int I_frame_no = 0;
-                int P_frame_size = 0;
-                int P_frame_no = 0;
-                int B_frame_size = 0;
-                int B_frame_no = 0;
+		int I_frame_size = 0;
+		int I_frame_no = 0;
+		int P_frame_size = 0;
+		int P_frame_no = 0;
+		int B_frame_size = 0;
+		int B_frame_no = 0;
 
-                long last_frame_time = 0;
+		long last_frame_time = 0;
 
-		
 		try {  
 			
 			/*
@@ -70,15 +69,15 @@ class TrafficGenerator {
 				/*
 				 *  Write line to output file 
 				 */
-                                long start_time = System.nanoTime();
-                                long time_delta = (Ftime - last_frame_time)*1000L;
-                                long timer = 0;
-                                while (time_delta > timer){
-                                    timer = System.nanoTime() - start_time;
-                                }
+				long wait_time = (Ftime - last_frame_time)*1000L;
+				long timer = 0;
+				long start_time = System.nanoTime();
+				while (wait_time > timer){
+				    timer = System.nanoTime() - start_time;
+				}
 //                                System.out.println(timer);
 //                                System.out.println("hi" + System.nanoTime());
-                                last_frame_time = Ftime;
+				last_frame_time = Ftime;
 
                                 mySender.send(Fsize); 
 			}

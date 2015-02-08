@@ -11,7 +11,7 @@ import java.util.*;
  * values are  displayed, and then written to a file with name "output.txt"  
  */
 
-class TrafficGenerator {  
+class TrafficGenerator_impr {  
 	public static void main (String[] args) { 
 		
 		
@@ -34,7 +34,7 @@ class TrafficGenerator {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("poisson3.data"); 
+			File fin = new File("short_poisson.data"); 
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  
                         Sender mySender = new Sender("127.0.0.1");
@@ -42,8 +42,9 @@ class TrafficGenerator {
 			/*
 			 * Open file for output 
 			 */
-			FileOutputStream fout =  new FileOutputStream("output.txt");
-			pout = new PrintStream (fout);
+//			FileOutputStream fout =  new FileOutputStream("output.txt");
+//			pout = new PrintStream (fout);
+			PrintWriter fout = new PrintWriter("generator.txt");
 
 
                         ArrayList<String> input_content = new ArrayList<String>();
@@ -68,6 +69,7 @@ class TrafficGenerator {
 				int SeqNo 	= Integer.parseInt(col1);
 				Long Ftime 	= Long.parseLong(col2);
 				int Fsize 	= Integer.parseInt(col3);
+//                                System.out.println("Ftime="+Ftime);
 
 				/*
 				 *  Display content of file 
@@ -78,18 +80,20 @@ class TrafficGenerator {
 				/*
 				 *  Write line to output file 
 				 */
-                                long start_time = System.nanoTime();
-                                long time_delta = (Ftime - last_frame_time)*1000L;
+                                long time_delta = Ftime - last_frame_time;
+//                                System.out.println("time_delta="+time_delta);
                                 long timer = 0;
-                                while (time_delta > timer){
-                                    timer = System.nanoTime() - start_time;
-                                }
-//                                System.out.println(timer);
+                                long start_time = System.nanoTime();
+                                while ((System.nanoTime() - start_time)/1000 < time_delta){;}
+				long waited = System.nanoTime() - start_time;
+				fout.println(waited/1000+"\t"+Fsize);
+//				long waited = (System.nanoTime() - start_time)/1000;
 //                                System.out.println("hi" + System.nanoTime());
                                 last_frame_time = Ftime;
 
                                 mySender.send(Fsize); 
 			}
+			fout.close();
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  
 			System.out.println("IOException: " + e.getMessage());  
@@ -99,7 +103,6 @@ class TrafficGenerator {
 			if (bis != null) { 
 				try { 
 					bis.close(); 
-					pout.close();
 				} catch (IOException e) { 
 					System.out.println("IOException: " +  e.getMessage());  
 				} 
