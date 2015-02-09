@@ -6,7 +6,7 @@ public class TrafficSink {
   public static void main(String[] args) throws IOException {
 
 	DatagramSocket socket = new DatagramSocket(4444);
-	byte[] buf = new byte[1000];
+	byte[] buf = new byte[1024];
 	DatagramPacket p = new DatagramPacket(buf, buf.length);
 	long previsuTime = 0;
 
@@ -18,7 +18,7 @@ public class TrafficSink {
 	ArrayList<String> outTrace = new ArrayList<String>();
 
 	int counter = 0;
-	while (counter < 10000){
+	while (true){
 		socket.receive(p);
 		
 		long time = System.nanoTime();
@@ -40,7 +40,7 @@ public class TrafficSink {
 //		fout.println(line);
 //	}
 
-    pout.close();
+//    pout.close();
   }
 
 }
