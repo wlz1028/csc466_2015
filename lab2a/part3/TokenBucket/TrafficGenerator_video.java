@@ -11,7 +11,7 @@ import java.util.*;
  * values are  displayed, and then written to a file with name "output.txt"  
  */
 
-class TrafficGenerator_impr {  
+class TrafficGenerator_video {  
 	public static void main (String[] args) { 
 		
 		
@@ -34,7 +34,7 @@ class TrafficGenerator_impr {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("short_poisson.data"); 
+			File fin = new File("short_movie.data"); 
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  
                         Sender mySender = new Sender("127.0.0.1");
@@ -55,6 +55,7 @@ class TrafficGenerator_impr {
                             input_content.add(currentLine);
 
                         }
+			
                         System.out.println("finshied reading");
 			/*
 			 *  Read file line-by-line until the end of the file 
@@ -68,11 +69,15 @@ class TrafficGenerator_impr {
 				String col1 = st.nextToken(); 
 				String col2 = st.nextToken(); 
 				String col3  = st.nextToken(); 
+				String col4  = st.nextToken(); 
 
-				int SeqNo 	= Integer.parseInt(col1);
-				Long Ftime 	= Long.parseLong(col2);
-				int Fsize 	= Integer.parseInt(col3);
-//                                System.out.println("Ftime="+Ftime);
+//				int SeqNo 	= Integer.parseInt(col1);
+//				Long Ftime 	= Long.parseLong(col2);
+//				int Fsize 	= Integer.parseInt(col3);
+				Float __Ftime = Float.parseFloat(col2);
+				int _Ftime = Math.round(__Ftime);
+				long Ftime = (long) _Ftime;
+				int Fsize 	= Integer.parseInt(col4);
 
 				/*
 				 *  Display content of file 

@@ -11,7 +11,7 @@ import java.util.*;
  * values are  displayed, and then written to a file with name "output.txt"  
  */
 
-class TrafficGenerator_impr {  
+class TrafficGenerator_ether {  
 	public static void main (String[] args) { 
 		
 		
@@ -34,7 +34,7 @@ class TrafficGenerator_impr {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("short_poisson.data"); 
+			File fin = new File("short_ether.data"); 
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  
                         Sender mySender = new Sender("127.0.0.1");
@@ -55,6 +55,7 @@ class TrafficGenerator_impr {
                             input_content.add(currentLine);
 
                         }
+			
                         System.out.println("finshied reading");
 			/*
 			 *  Read file line-by-line until the end of the file 
@@ -67,12 +68,16 @@ class TrafficGenerator_impr {
 				StringTokenizer st = new StringTokenizer(_currentLine); 
 				String col1 = st.nextToken(); 
 				String col2 = st.nextToken(); 
-				String col3  = st.nextToken(); 
+//				String col3  = st.nextToken(); 
+//				String col4  = st.nextToken(); 
 
-				int SeqNo 	= Integer.parseInt(col1);
-				Long Ftime 	= Long.parseLong(col2);
-				int Fsize 	= Integer.parseInt(col3);
-//                                System.out.println("Ftime="+Ftime);
+//				int SeqNo 	= Integer.parseInt(col1);
+//				Long Ftime 	= Long.parseLong(col2);
+//				int Fsize 	= Integer.parseInt(col3);
+				Float __Ftime = Float.parseFloat(col1)*1000000;
+				int _Ftime = Math.round(__Ftime);
+				long Ftime = (long) _Ftime;
+				int Fsize 	= Integer.parseInt(col2);
 
 				/*
 				 *  Display content of file 
@@ -95,6 +100,7 @@ class TrafficGenerator_impr {
                                 last_frame_time = Ftime;
 
                                 mySender.send(Fsize); 
+				
 			}
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  

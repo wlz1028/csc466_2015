@@ -12,12 +12,22 @@ public class Sender {
   }
 
   public void send(int fSize) throws IOException {
-    byte[]      buf  = new byte[fSize];
-    DatagramPacket packet =
-                 new DatagramPacket(buf, buf.length, addr, port);
-    DatagramSocket socket = new DatagramSocket();
-    socket.send(packet);
-    socket.close();
+      int sendSize = 0;
+      while(fSize > 0 ){
+          if (fSize < 1024 ){
+              sendSize = fSize;
+              fSize = 0;
+          } else {
+              sendSize = 1024;
+              fSize = fSize - sendSize;
+          }
+          byte[]      buf  = new byte[sendSize];
+          DatagramPacket packet =
+                       new DatagramPacket(buf, buf.length, addr, port);
+          DatagramSocket socket = new DatagramSocket();
+          socket.send(packet);
+          socket.close();
+    }
   }
 }
 
