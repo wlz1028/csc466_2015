@@ -44,7 +44,10 @@ class TrafficGenerator_impr {
 			 */
 //			FileOutputStream fout =  new FileOutputStream("output.txt");
 //			pout = new PrintStream (fout);
-			PrintWriter fout = new PrintWriter("generator.txt");
+//			PrintWriter fout = new PrintWriter("generator.txt");
+			FileOutputStream fout =  new FileOutputStream("generator.txt");
+			pout = new PrintStream (fout);
+			
 
 
                         ArrayList<String> input_content = new ArrayList<String>();
@@ -86,14 +89,13 @@ class TrafficGenerator_impr {
                                 long start_time = System.nanoTime();
                                 while ((System.nanoTime() - start_time)/1000 < time_delta){;}
 				long waited = System.nanoTime() - start_time;
-				fout.println(waited/1000+"\t"+Fsize);
+//				pout.println(waited/1000+"\t"+Fsize);
 //				long waited = (System.nanoTime() - start_time)/1000;
 //                                System.out.println("hi" + System.nanoTime());
                                 last_frame_time = Ftime;
 
                                 mySender.send(Fsize); 
 			}
-			fout.close();
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  
 			System.out.println("IOException: " + e.getMessage());  
@@ -103,6 +105,7 @@ class TrafficGenerator_impr {
 			if (bis != null) { 
 				try { 
 					bis.close(); 
+					pout.close();
 				} catch (IOException e) { 
 					System.out.println("IOException: " +  e.getMessage());  
 				} 

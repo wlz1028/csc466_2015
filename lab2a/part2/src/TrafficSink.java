@@ -10,12 +10,15 @@ public class TrafficSink {
 	DatagramPacket p = new DatagramPacket(buf, buf.length);
 	long previsuTime = 0;
 
-	PrintWriter fout = new PrintWriter("out.txt");
+//	PrintWriter fout = new PrintWriter("out.txt");
+	FileOutputStream fout =  new FileOutputStream("out.txt");
+	PrintStream pout = new PrintStream (fout);
+	
 
 	ArrayList<String> outTrace = new ArrayList<String>();
 
 	int counter = 0;
-	while (counter <= 10000){
+	while (counter < 10000){
 		socket.receive(p);
 		
 		long time = System.nanoTime();
@@ -26,7 +29,7 @@ public class TrafficSink {
 		}
 //		fout.println((time-previsuTime)/1000L +"\t" + p.getLength());
 //		outTrace.add((time-previsuTime)/1000L +"\t" + p.getLength());
-		fout.println( (time-previsuTime)/1000 +"\t" + p.getLength());
+		pout.println( (time-previsuTime)/1000 +"\t" + p.getLength());
 		previsuTime = time;
 		counter += 1;
 //		fout.println()
@@ -37,7 +40,7 @@ public class TrafficSink {
 //		fout.println(line);
 //	}
 
-    fout.close();
+    pout.close();
   }
 
 }
