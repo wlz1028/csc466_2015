@@ -27,20 +27,10 @@ public class TrafficSink {
 		{
 		    previsuTime = time;
 		}
-//		fout.println((time-previsuTime)/1000L +"\t" + p.getLength());
-//		outTrace.add((time-previsuTime)/1000L +"\t" + p.getLength());
 		pout.println( (time-previsuTime)/1000 +"\t" + p.getLength());
 		previsuTime = time;
 		counter += 1;
-//		fout.println()
 	}
-
-//	System.out.println("finish");
-//	for (String line : outTrace){
-//		fout.println(line);
-//	}
-
-//    pout.close();
   }
 
 }
