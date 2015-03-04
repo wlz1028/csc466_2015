@@ -54,6 +54,12 @@ public class Bucket implements Runnable
 		//        and update the variable "lastTime" 
 		//     2. Update the variable noTokens, which stores the updated content of the token bucket
 		//
+		long time_delta = System.nanoTime() - lastTime;
+		lastTime = System.nanoTime();
+		noTokens += time_delta/tokenInterval;
+		if (noTokens > size){
+			noTokens = size;
+		}
 	}
 	
 	/**
@@ -79,6 +85,11 @@ public class Bucket implements Runnable
 		//
 		// In Lab 2B, you  add the code that removes the required number of tokens 
 		// and returns false if there are not enough tokens. 	
+		if (noToRemove > noTokens){
+			return false;
+		} else {
+			noTokens -= noToRemove;
+		}
 		return true;
 	}
 	
@@ -97,7 +108,7 @@ public class Bucket implements Runnable
 		//
 		// In Lab 2B, you  add the code that sets the correct  time until the bucket 
 		// contains the required number  tokensToWaitFor tokens 
-
-		return (0);
+		
+		return (tokensToWaitFor - noTokens)*tokenInterval;
 	}
 }

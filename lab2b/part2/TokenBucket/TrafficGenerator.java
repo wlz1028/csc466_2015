@@ -9,14 +9,14 @@ class TrafficGenerator {
 		String currentLine = null; 
 		PrintStream pout = null;
 
-                int I_frame_size = 0;
-                int I_frame_no = 0;
-                int P_frame_size = 0;
-                int P_frame_no = 0;
-                int B_frame_size = 0;
-                int B_frame_no = 0;
+		int I_frame_size = 0;
+		int I_frame_no = 0;
+		int P_frame_size = 0;
+		int P_frame_no = 0;
+		int B_frame_size = 0;
+		int B_frame_no = 0;
 
-		try {  
+		try {
 			
 			Sender mySender = new Sender("127.0.0.1");
 			ArrayList<String> input_content;
