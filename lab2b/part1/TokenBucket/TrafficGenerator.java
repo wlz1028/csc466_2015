@@ -20,8 +20,8 @@ class TrafficGenerator {
 			
 			Sender mySender = new Sender("127.0.0.1");
 			ArrayList<String> input_content;
-			int T = 2500;
-			int N = 10;
+			int T = 5000;
+			int N = 5;
 			int L = 100;
 			int n = 10000;
 			input_content = generate_taffic(T, N, L, n);
@@ -79,7 +79,4 @@ class TrafficGenerator {
 		}
 		return traffic;
 	}
-		
-
-	
 }
