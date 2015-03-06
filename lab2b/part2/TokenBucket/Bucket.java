@@ -109,6 +109,11 @@ public class Bucket implements Runnable
 		// In Lab 2B, you  add the code that sets the correct  time until the bucket 
 		// contains the required number  tokensToWaitFor tokens 
 		
-		return (tokensToWaitFor - noTokens)*tokenInterval;
+		if (tokensToWaitFor > noTokens) {
+			return (tokensToWaitFor - noTokens)*tokenInterval;
+		} else {
+
+			return (0);
+		}
 	}
 }

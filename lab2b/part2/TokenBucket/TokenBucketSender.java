@@ -106,16 +106,19 @@ public class TokenBucketSender implements Runnable
 				{
 					// get how many nanoseconds before there are enough tokens to send packet
 					long timeToWait = bucket.getWaitingTime(packet.getLength());
-					try
-					{
+//					try
+//					{
 						// sleep until there are enough tokens
-						Thread.sleep(timeToWait/1000000, (int)(timeToWait%1000000));
-					} 
-					catch (InterruptedException e)
-					{
+//						Thread.sleep(timeToWait/1000000, (int)(timeToWait%1000000));
+						long start_time = System.nanoTime();
+		                                while ((System.nanoTime() - start_time) < timeToWait){;}
+
+//					} 
+//					catch (InterruptedException e)
+//					{
 						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//						e.printStackTrace();
+//					}
 				}
 			}
 			// there are no packets in buffer to send. Wait for one to arrive to buffer.

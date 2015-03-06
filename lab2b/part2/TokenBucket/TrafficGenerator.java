@@ -20,7 +20,7 @@ class TrafficGenerator {
 			
 			Sender mySender = new Sender("127.0.0.1");
 			ArrayList<String> input_content;
-			int T = 1000;
+			int T = 1600;
 			int N = 1;
 			int L = 100;
 			int n = 10000;
