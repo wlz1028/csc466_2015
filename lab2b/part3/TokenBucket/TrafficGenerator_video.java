@@ -34,6 +34,7 @@ class TrafficGenerator_video {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
+//			File fin = new File("movietrace.data"); 
 			File fin = new File("short_movie.data"); 
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  

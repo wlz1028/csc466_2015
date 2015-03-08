@@ -34,7 +34,7 @@ class TrafficGenerator_impr {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("short_poisson.data"); 
+			File fin = new File("poisson3.data"); 
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  
                         Sender mySender = new Sender("127.0.0.1");

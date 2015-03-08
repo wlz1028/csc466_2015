@@ -40,7 +40,7 @@ public class TokenBucket implements Runnable
         // token bucket has 10000 tokens, rate 5000 tokens/sec, and
         // records packet arrivals to bucket.txt).
          TokenBucket lb = new TokenBucket(4444, "localhost", 4445,
-         100, 500*3, 500, (5000000/8), "bucket.txt");
+         100000, 14400000, 660000, (1000000/8), "bucket.txt");
          new Thread(lb).start();
         }
 
