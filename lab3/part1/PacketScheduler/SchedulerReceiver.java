@@ -40,11 +40,14 @@ public class SchedulerReceiver implements Runnable
 	{		
 		DatagramSocket socket = null;
 		PrintStream pOut = null;	
+		PrintStream pOut_discard = null;	
 		
 		try
 		{
 			FileOutputStream fOut =  new FileOutputStream(fileName);
+			FileOutputStream fOut_discard =  new FileOutputStream("discard_"+fileName);
 			pOut = new PrintStream (fOut);
+			pOut_discard = new PrintStream (fOut_discard);
 			long previsuTime = 0;
 			
 			socket = new DatagramSocket(port);
@@ -75,7 +78,6 @@ public class SchedulerReceiver implements Runnable
 					pOut.print(bufferSize + "\t");
 				}
 				pOut.println();
-				previsuTime = startTime;
 				
 				/*
 				 * Process packet.
@@ -84,8 +86,12 @@ public class SchedulerReceiver implements Runnable
 				// add packet to a queue if there is enough space
 				if (buffers[0].addPacket(new DatagramPacket(packet.getData(), packet.getLength())) < 0)
 				{
-					System.err.println("Packet dropped (queue full).");
+//					System.err.println("Packet dropped (queue full).");
+					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 1);
+				} else {
+					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 0);
 				}
+				previsuTime = startTime;
 				/*
 				 * TODO: 
 				 * Replace previous command with code that:

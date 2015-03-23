@@ -62,7 +62,7 @@ public class PacketScheduler implements Runnable
 		receiver = new SchedulerReceiver(buffers, inPort,  fileName);
 	}
 
-	public static void main(String[] args){                                                 
+	public static void main(String[] args){
 	// listen on port 4444, send to localhost:4445,
 	// max. size of received packet is 1024 bytes,
 	// buffer capacity is 100*1024 bytes,

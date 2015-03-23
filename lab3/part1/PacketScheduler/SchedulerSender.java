@@ -73,6 +73,7 @@ public class SchedulerSender implements Runnable
 			// time it would take to send packet with given link capacity
 			long sendingTime = (long)((((float)packet.getLength()*8)/linkCapacity)*1000000000);
 			
+//			System.out.println("Send packet");
 			socket.send(packet);
 			
 			// time before next packet can be sent (simulate link capacity)
