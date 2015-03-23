@@ -53,13 +53,34 @@ public class PacketScheduler implements Runnable
 		{
 			InetAddress destAddress = InetAddress.getByName(outAddress);
 			sender = new SchedulerSender(buffers, destAddress, outPort, linkCapacity);
-		} 
+		}
 		catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		receiver = new SchedulerReceiver(buffers, inPort,  fileName);
+	}
+
+	public static void main(String[] args){                                                 
+	// listen on port 4444, send to localhost:4445,
+	// max. size of received packet is 1024 bytes,
+	// buffer capacity is 100*1024 bytes,
+	// token bucket has 10000 tokens, rate 5000 tokens/sec, and
+	// records packet arrivals to bucket.txt).
+		long [] bufferCapacities = {100000l};
+		PacketScheduler ps = new PacketScheduler(4444, "localhost", 4445,
+		//linkCapacity
+		1000000l,
+		//numBuffer
+		1,
+		//maxPacketSize
+		1500,
+		//bufferCapacities
+		bufferCapacities,
+		//fileName
+		"PacketScheduler.txt");
+		new Thread(ps).start();
 	}
 	
 	/**
