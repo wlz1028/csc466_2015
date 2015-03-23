@@ -46,4 +46,4 @@ sleep 1
 
 git add *txt
 git add ../*txt
-git commit -m 'a'
+echo 'git commit -m "a"'
