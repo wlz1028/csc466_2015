@@ -38,18 +38,13 @@ class TrafficGenerator_video {
 			FileReader fis = new FileReader(fin);  
 			bis = new BufferedReader(fis);  
                         Sender mySender = new Sender("127.0.0.1");
+			byte tag = 0x02;
 			
 			/*
 			 * Open file for output 
 			 */
-//			FileOutputStream fout =  new FileOutputStream("output.txt");
-//			pout = new PrintStream (fout);
-//			PrintWriter fout = new PrintWriter("generator.txt");
 			FileOutputStream fout =  new FileOutputStream("generator.txt");
 			pout = new PrintStream (fout);
-			
-
-
                         ArrayList<String> input_content = new ArrayList<String>();
 			while ( (currentLine = bis.readLine()) != null) { 
                             input_content.add(currentLine);
@@ -71,20 +66,11 @@ class TrafficGenerator_video {
 				String col3  = st.nextToken(); 
 				String col4  = st.nextToken(); 
 
-//				int SeqNo 	= Integer.parseInt(col1);
-//				Long Ftime 	= Long.parseLong(col2);
-//				int Fsize 	= Integer.parseInt(col3);
 				Float __Ftime = Float.parseFloat(col2);
 				int _Ftime = Math.round(__Ftime);
 				long Ftime = (long) _Ftime;
 				int Fsize 	= Integer.parseInt(col4);
 
-				/*
-				 *  Display content of file 
-				 */
-//				System.out.println("Frame time:   " + Ftime); 
-				
-				
 				/*
 				 *  Write line to output file 
 				 */
@@ -94,12 +80,9 @@ class TrafficGenerator_video {
                                 long start_time = System.nanoTime();
                                 while ((System.nanoTime() - start_time)/1000 < time_delta){;}
 				long waited = System.nanoTime() - start_time;
-//				pout.println(waited/1000+"\t"+Fsize);
-//				long waited = (System.nanoTime() - start_time)/1000;
-//                                System.out.println("hi" + System.nanoTime());
                                 last_frame_time = Ftime;
 
-                                mySender.send(Fsize); 
+                                mySender.send(Fsize, tag); 
 			}
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  
@@ -118,4 +101,3 @@ class TrafficGenerator_video {
 		} 
 	}  
 }
-

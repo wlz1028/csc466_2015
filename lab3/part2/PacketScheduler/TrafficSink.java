@@ -6,7 +6,8 @@ public class TrafficSink {
   public static void main(String[] args) throws IOException {
 
 	DatagramSocket socket = new DatagramSocket(4445);
-	byte[] buf = new byte[1024];
+	byte[] buf = new byte[1480];
+	byte tag;
 	DatagramPacket p = new DatagramPacket(buf, buf.length);
 	long previsuTime = 0;
 
@@ -20,7 +21,8 @@ public class TrafficSink {
 	int counter = 0;
 	while (true){
 		socket.receive(p);
-		
+//		tag = p.getData()[0];
+//		System.out.println(tag);
 		long time = System.nanoTime();
 		// to put zero in first line
 		if(previsuTime == 0)

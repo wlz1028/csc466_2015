@@ -32,10 +32,11 @@ class TrafficGenerator_impr {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("poisson3.data");
+			File fin = new File("short_poisson.data");
 			FileReader fis = new FileReader(fin);
 			bis = new BufferedReader(fis);
 			Sender mySender = new Sender("127.0.0.1");
+			byte tag = 0x01;
 			
 			/*
 			 * Open file for output 
@@ -66,18 +67,19 @@ class TrafficGenerator_impr {
 				Long Ftime = Long.parseLong(col2);
 				int Fsize = Integer.parseInt(col3);
 				Long N_scale = Long.parseLong(args[0]);
-				Ftime = Ftime / N_scale;
+//				Ftime = Ftime / N_scale;
 				/*
 				 *  Write line to output file 
 				 */
 				long time_delta = Ftime - last_frame_time;
+				time_delta = time_delta / N_scale;
 				long timer = 0;
 				long start_time = System.nanoTime();
 				while ((System.nanoTime() - start_time)/1000 < time_delta){;}
 				long waited = System.nanoTime() - start_time;
 				last_frame_time = Ftime;
 				
-				mySender.send(Fsize); 
+				mySender.send(Fsize, tag);
 			}
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  

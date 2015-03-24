@@ -49,6 +49,8 @@ public class SchedulerReceiver implements Runnable
 			pOut = new PrintStream (fOut);
 			pOut_discard = new PrintStream (fOut_discard);
 			long previsuTime = 0;
+			byte tag;
+			int qNo;
 			
 			socket = new DatagramSocket(port);
 			
@@ -83,8 +85,11 @@ public class SchedulerReceiver implements Runnable
 				 * Process packet.
 				 */
 				
+				//classify queue by first byte in data
+				qNo = (packet.getData()[0] == 0x01) ? 0:1;
+//				System.out.println("Queue = "+ qNo);
 				// add packet to a queue if there is enough space
-				if (buffers[0].addPacket(new DatagramPacket(packet.getData(), packet.getLength())) < 0)
+				if (buffers[qNo].addPacket(new DatagramPacket(packet.getData(), packet.getLength())) < 0)
 				{
 //					System.err.println("Packet dropped (queue full).");
 					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 1);

@@ -66,11 +66,11 @@ class TrafficGenerator_impr {
 				Long Ftime = Long.parseLong(col2);
 				int Fsize = Integer.parseInt(col3);
 				Long N_scale = Long.parseLong(args[0]);
-				Ftime = Ftime / N_scale;
 				/*
 				 *  Write line to output file 
 				 */
 				long time_delta = Ftime - last_frame_time;
+				time_delta = time_delta / N_scale;
 				long timer = 0;
 				long start_time = System.nanoTime();
 				while ((System.nanoTime() - start_time)/1000 < time_delta){;}

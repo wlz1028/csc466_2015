@@ -117,9 +117,15 @@ public class SchedulerSender implements Runnable
 				{
 					sendPacket(packet, startTime);
 					buffers[0].removePacket();
+//					System.out.println("Send q1");
 				}
-				else
+				else if ((packet = buffers[1].peek()) != null)
 				{
+					noEmpty++;
+					sendPacket(packet, startTime);
+					buffers[1].removePacket();
+//					System.out.println("Send q2");
+				} else {
 					noEmpty++;
 				}
 				

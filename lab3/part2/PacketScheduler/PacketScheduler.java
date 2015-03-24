@@ -68,14 +68,14 @@ public class PacketScheduler implements Runnable
 	// buffer capacity is 100*1024 bytes,
 	// token bucket has 10000 tokens, rate 5000 tokens/sec, and
 	// records packet arrivals to bucket.txt).
-		long [] bufferCapacities = {100000l};
+		long [] bufferCapacities = {100000l, 100000l};
 		PacketScheduler ps = new PacketScheduler(4444, "localhost", 4445,
 		//linkCapacity
-		1000000l,
+		2000000l,
 		//numBuffer
-		1,
+		2,
 		//maxPacketSize
-		1500,
+		1480,
 		//bufferCapacities
 		bufferCapacities,
 		//fileName
