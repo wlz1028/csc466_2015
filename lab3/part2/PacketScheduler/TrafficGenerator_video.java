@@ -82,7 +82,7 @@ class TrafficGenerator_video {
 				long waited = System.nanoTime() - start_time;
                                 last_frame_time = Ftime;
 
-                                mySender.send(Fsize, tag); 
+                                mySender.send(Fsize, tag);
 			}
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  

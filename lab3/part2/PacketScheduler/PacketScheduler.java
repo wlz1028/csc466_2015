@@ -71,7 +71,7 @@ public class PacketScheduler implements Runnable
 		long [] bufferCapacities = {100000l, 100000l};
 		PacketScheduler ps = new PacketScheduler(4444, "localhost", 4445,
 		//linkCapacity
-		2000000l,
+		20l*1000000l,
 		//numBuffer
 		2,
 		//maxPacketSize
