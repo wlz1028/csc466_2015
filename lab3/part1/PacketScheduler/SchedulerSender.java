@@ -6,6 +6,10 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+
 
 /**
  * Removes and sends packets from buffers to a given address and port.
@@ -95,76 +99,75 @@ public class SchedulerSender implements Runnable
 	 */
 	public void run()
 	{
-		while(true)
-		{
-			DatagramPacket packet = null;	
-			// number of empty buffers
-			int noEmpty = 0;
-			
-			// get time when next packet can be sent 
-			long startTime = System.nanoTime();
-			long nextSendOK = senderActiveUntil;
-			
-			// if no packet is in transmission look for next packet to send
-			if (System.nanoTime() >= nextSendOK)
+		try{
+			FileOutputStream fOut =  new FileOutputStream("send_PacketScheduler.txt");
+			PrintStream pOut = new PrintStream (fOut);
+
+			while(true)
 			{
-				/*
-				 * Check if there is a packet in queue.
-				 * If there is send packet, remove it form queue.
-				 * If there is no packet increase noEmpty that keeps track of number of empty queues 
-				 */
-				if ((packet = buffers[0].peek()) != null)
+				DatagramPacket packet = null;	
+				// number of empty buffers
+				int noEmpty = 0;
+				
+				// get time when next packet can be sent 
+				long startTime = System.nanoTime();
+				long nextSendOK = senderActiveUntil;
+				
+				// if no packet is in transmission look for next packet to send
+				if (System.nanoTime() >= nextSendOK)
 				{
-					sendPacket(packet, startTime);
-					buffers[0].removePacket();
+					/*
+					 * Check if there is a packet in queue.
+					 * If there is send packet, remove it form queue.
+					 * If there is no packet increase noEmpty that keeps track of number of empty queues 
+					 */
+					if ((packet = buffers[0].peek()) != null)
+					{
+						sendPacket(packet, startTime);
+						pOut.println(System.nanoTime());
+						buffers[0].removePacket();
+					}
+					else
+					{
+						noEmpty++;
+					}
+					
+					/*
+					 * TODO:
+					 * Implement sending of a SINGLE packet from packet scheduler.
+					 * Variable noEmpty must be set to total number of queues if all are empty. 
+					 * 
+					 * NOTE: The code you are adding sends at most one packet!
+					 * 
+					 * Look at the example above to find out how to check if a particular queue is empty.
+					 * Once you have found from which queue to send, send a packet and remove it from that queue 
+					 * (as in example above).
+					 */
 				}
 				else
 				{
-					noEmpty++;
+					// wait until it is possible to send
+					long timeToWait = nextSendOK-startTime;
+					long start_time = System.nanoTime();
+					while ((System.nanoTime() - start_time) < timeToWait){;}
+//					try 
+//					{
+//						Thread.sleep(timeToWait/1000000, (int)timeToWait%1000000);
+//						
+//					} 
+//					catch (InterruptedException e)
+//					{
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+					continue;
 				}
 				
-				/*
-				 * TODO:
-				 * Implement sending of a SINGLE packet from packet scheduler.
-				 * Variable noEmpty must be set to total number of queues if all are empty. 
-				 * 
-				 * NOTE: The code you are adding sends at most one packet!
-				 * 
-				 * Look at the example above to find out how to check if a particular queue is empty.
-				 * Once you have found from which queue to send, send a packet and remove it from that queue 
-				 * (as in example above).
-				 */
-			}
-			else
-			{
-				// wait until it is possible to send
-				long timeToWait = nextSendOK-startTime;
-				try 
-				{
-					Thread.sleep(timeToWait/1000000, (int)timeToWait%1000000);
-				} 
-				catch (InterruptedException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				continue;
-			}
-			
-			// there are no packets in buffers to send. Wait for one to arrive to buffer.
-			// (busy wait)
-			if (noEmpty == buffers.length)
-			{	
-				boolean anyNotEmpty = false;
-				for (int i=0; i<buffers.length; i++)
-				{
-					if (buffers[i].getSize()>0)
-					{
-						anyNotEmpty = true;
-					}
-				}
-				while(!anyNotEmpty)
-				{
+				// there are no packets in buffers to send. Wait for one to arrive to buffer.
+				// (busy wait)
+				if (noEmpty == buffers.length)
+				{	
+					boolean anyNotEmpty = false;
 					for (int i=0; i<buffers.length; i++)
 					{
 						if (buffers[i].getSize()>0)
@@ -172,8 +175,22 @@ public class SchedulerSender implements Runnable
 							anyNotEmpty = true;
 						}
 					}
-				}
-			}	
-		}
+					while(!anyNotEmpty)
+					{
+						for (int i=0; i<buffers.length; i++)
+						{
+							if (buffers[i].getSize()>0)
+							{
+								anyNotEmpty = true;
+							}
+						}
+					}
+				}	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
 	}
 }
