@@ -13,7 +13,7 @@ cd ..
 java PacketScheduler/PacketScheduler &
 pid2=$!
 cd -
-java TrafficGenerator_impr $N &
+#java TrafficGenerator_impr $N &
 pid3=$!
 java TrafficGenerator_video &
 pid4=$!
