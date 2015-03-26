@@ -14,6 +14,7 @@ cp out.txt out_1.3_N_1.txt
 cp ../discard_PacketScheduler.txt ../PacketScheduler_discard_1.3_N_1.txt
 cp ../PacketScheduler.txt ../PacketScheduler_1.3_N_1.txt
 cp ../send_PacketScheduler.txt ../send_PacketScheduler_1.3_N_1.txt
+cp ../rec_PacketScheduler.txt ../rec_PacketScheduler_1.3_N_1.txt
 kill $pid1 $pid2
 sleep 1
 
@@ -29,6 +30,7 @@ cp out.txt out_1.3_N_5.txt
 cp ../discard_PacketScheduler.txt ../PacketScheduler_discard_1.3_N_5.txt
 cp ../PacketScheduler.txt ../PacketScheduler_1.3_N_5.txt
 cp ../send_PacketScheduler.txt ../send_PacketScheduler_1.3_N_5.txt
+cp ../rec_PacketScheduler.txt ../rec_PacketScheduler_1.3_N_5.txt
 kill $pid1 $pid2
 sleep 1
 
@@ -44,6 +46,7 @@ cp out.txt out_1.3_N_9.txt
 cp ../discard_PacketScheduler.txt ../PacketScheduler_discard_1.3_N_9.txt
 cp ../PacketScheduler.txt ../PacketScheduler_1.3_N_9.txt
 cp ../send_PacketScheduler.txt ../send_PacketScheduler_1.3_N_9.txt
+cp ../rec_PacketScheduler.txt ../rec_PacketScheduler_1.3_N_5.txt
 kill $pid1 $pid2
 sleep 1
 

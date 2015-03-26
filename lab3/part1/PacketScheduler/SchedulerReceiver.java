@@ -41,13 +41,17 @@ public class SchedulerReceiver implements Runnable
 		DatagramSocket socket = null;
 		PrintStream pOut = null;	
 		PrintStream pOut_discard = null;	
+		PrintStream pOut_rec = null;	
 		
 		try
 		{
 			FileOutputStream fOut =  new FileOutputStream(fileName);
 			FileOutputStream fOut_discard =  new FileOutputStream("discard_"+fileName);
+			FileOutputStream fOut_rec =  new FileOutputStream("rec_"+fileName);
 			pOut = new PrintStream (fOut);
 			pOut_discard = new PrintStream (fOut_discard);
+			pOut_rec = new PrintStream (fOut_rec);
+
 			long previsuTime = 0;
 			
 			socket = new DatagramSocket(port);
@@ -78,6 +82,8 @@ public class SchedulerReceiver implements Runnable
 					pOut.print(bufferSize + "\t");
 				}
 				pOut.println();
+
+				pOut_rec.println(System.nanoTime());
 				
 				/*
 				 * Process packet.

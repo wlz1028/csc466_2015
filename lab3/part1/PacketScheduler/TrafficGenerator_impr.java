@@ -76,6 +76,7 @@ class TrafficGenerator_impr {
 				
 				long start_time = System.nanoTime();
 				while ((System.nanoTime() - start_time) < timeToWait){;}
+//				System.out.println(System.nanoTime()-start_time);
 				last_frame_time = Ftime;
 				
 				mySender.send(Fsize); 
