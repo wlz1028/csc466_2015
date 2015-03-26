@@ -53,30 +53,31 @@ class TrafficGenerator_impr {
 			/*
 			 *  Read file line-by-line until the end of the file 
 			 */
-                        for (String _currentLine: input_content) {
+			int counter = 0;
+			for (String _currentLine: input_content) {
 				
 				/*
 				 *  Parse line and break up into elements 
 				 */
+//				System.out.println(counter++);
 				StringTokenizer st = new StringTokenizer(_currentLine); 
-				String col1 = st.nextToken(); 
-				String col2 = st.nextToken(); 
-				String col3  = st.nextToken(); 
+				String col1 = st.nextToken();
+				String col2 = st.nextToken();
+				String col3  = st.nextToken();
 
 				int SeqNo = Integer.parseInt(col1);
 				Long Ftime = Long.parseLong(col2);
 				int Fsize = Integer.parseInt(col3);
 				Long N_scale = Long.parseLong(args[0]);
-//				Ftime = Ftime / N_scale;
 				/*
 				 *  Write line to output file 
 				 */
 				long time_delta = Ftime - last_frame_time;
-				time_delta = time_delta / N_scale;
-				long timer = 0;
+				long timeToWait = time_delta * 1000;
+				timeToWait = timeToWait / N_scale;
+				
 				long start_time = System.nanoTime();
-				while ((System.nanoTime() - start_time)/1000 < time_delta){;}
-				long waited = System.nanoTime() - start_time;
+				while ((System.nanoTime() - start_time) < timeToWait){;}
 				last_frame_time = Ftime;
 				
 				mySender.send(Fsize, tag);

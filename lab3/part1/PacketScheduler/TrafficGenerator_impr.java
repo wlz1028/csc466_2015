@@ -71,20 +71,9 @@ class TrafficGenerator_impr {
 				 *  Write line to output file 
 				 */
 				long time_delta = Ftime - last_frame_time;
-				sum_time += time_delta;
 				long timeToWait = time_delta * 1000;
 				timeToWait = timeToWait / N_scale;
 				
-
-//				try 
-//				{
-//					Thread.sleep(timeToWait/1000000, (int)timeToWait%1000000);
-//				} 
-//				catch (InterruptedException e)
-//				{
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 				long start_time = System.nanoTime();
 				while ((System.nanoTime() - start_time) < timeToWait){;}
 				last_frame_time = Ftime;

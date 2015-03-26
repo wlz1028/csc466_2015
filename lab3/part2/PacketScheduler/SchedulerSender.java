@@ -145,15 +145,9 @@ public class SchedulerSender implements Runnable
 			{
 				// wait until it is possible to send
 				long timeToWait = nextSendOK-startTime;
-				try 
-				{
-					Thread.sleep(timeToWait/1000000, (int)timeToWait%1000000);
-				} 
-				catch (InterruptedException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				long start_time = System.nanoTime();
+				while ((System.nanoTime() - start_time) < timeToWait){;}
+
 				continue;
 			}
 			

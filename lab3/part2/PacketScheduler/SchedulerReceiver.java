@@ -91,10 +91,12 @@ public class SchedulerReceiver implements Runnable
 				// add packet to a queue if there is enough space
 				if (buffers[qNo].addPacket(new DatagramPacket(packet.getData(), packet.getLength())) < 0)
 				{
+					int q0 = (qNo == 0) ? 1:0;
+					int q1 = (qNo == 1) ? 1:0;
 //					System.err.println("Packet dropped (queue full).");
-					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 1);
+					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + q0+"\t"+q1);
 				} else {
-					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 0);
+					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 0 + "\t"+ 0);
 				}
 				previsuTime = startTime;
 				/*

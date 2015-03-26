@@ -74,15 +74,13 @@ class TrafficGenerator_video {
 				/*
 				 *  Write line to output file 
 				 */
-                                long time_delta = Ftime - last_frame_time;
-//                                System.out.println("time_delta="+time_delta);
-                                long timer = 0;
-                                long start_time = System.nanoTime();
-                                while ((System.nanoTime() - start_time)/1000 < time_delta){;}
-				long waited = System.nanoTime() - start_time;
-                                last_frame_time = Ftime;
-
-                                mySender.send(Fsize, tag);
+				long time_delta = 33l*1000000l;
+				long start_time = System.nanoTime();
+				while ((System.nanoTime() - start_time) < time_delta){;}
+//				System.out.println("tool: "+ (System.nanoTime()-start_time)/1000000);
+				last_frame_time = Ftime;
+				
+				mySender.send(Fsize, tag);
 			}
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  
@@ -99,5 +97,5 @@ class TrafficGenerator_video {
 				} 
 			} 
 		} 
-	}  
+	}
 }
