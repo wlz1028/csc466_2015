@@ -41,13 +41,16 @@ public class SchedulerReceiver implements Runnable
 		DatagramSocket socket = null;
 		PrintStream pOut = null;	
 		PrintStream pOut_discard = null;	
+		PrintStream pOut_rec = null;	
 		
 		try
 		{
 			FileOutputStream fOut =  new FileOutputStream(fileName);
 			FileOutputStream fOut_discard =  new FileOutputStream("discard_"+fileName);
+			FileOutputStream fOut_rec =  new FileOutputStream("rec"+fileName);
 			pOut = new PrintStream (fOut);
-			pOut_discard = new PrintStream (fOut_discard);
+			pOut_discard = new PrintStream (fOut_discard); 
+			pOut_rec = new PrintStream (fOut_rec);
 			long previsuTime = 0;
 			byte tag;
 			int qNo;
@@ -90,12 +93,26 @@ public class SchedulerReceiver implements Runnable
 				qNo = qNo - 1;
 //				System.out.println("Queue = "+ qNo);
 				// add packet to a queue if there is enough space
+//				pOut_rec.println(System.nanoTime());
 				if (buffers[qNo].addPacket(new DatagramPacket(packet.getData(), packet.getLength())) < 0)
 				{
 //					System.err.println("Packet dropped (queue full).");
-					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 1);
+					int q0 = 0;
+					int q1 = 0;
+					int q2 = 0;
+					if (qNo == 0) {
+						q0 = 1;
+					} else if (qNo == 1){
+						q1 = 1;
+					} else if (qNo == 2){
+						q2 = 1;
+					} else {
+						System.out.println("bad qNo");
+					}
+					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t"+ q0 +"\t"+q1+"\t" +q2);
+					System.out.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t"+ q0 +"\t"+q1+"\t" +q2);
 				} else {
-					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 0);
+					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 0+ "\t" + 0+ "\t" + 0);
 				}
 				previsuTime = startTime;
 				/*

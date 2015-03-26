@@ -9,11 +9,11 @@ java PacketScheduler/PacketScheduler &
 cd -
 pid2=$!
 
-java TrafficGenerator_impr 1 &
+java TrafficGenerator_impr 8 &
 pid3=$!
-java TrafficGenerator_impr 5 &
+java TrafficGenerator_impr 6 &
 pid4=$!
-java TrafficGenerator_impr 9 &
+java TrafficGenerator_impr 2 &
 pid5=$!
 
 echo "Sending..."

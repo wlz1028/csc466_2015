@@ -38,11 +38,11 @@ class TrafficGenerator_impr {
 			Sender mySender = new Sender("127.0.0.1");
 			int tag_str = Integer.parseInt(args[0]);
 			byte tag = 0x0;
-			if (tag_str == 1){
+			if (tag_str == 8){
 				tag = 0x01;
-			} else if (tag_str == 5){
+			} else if (tag_str == 6){
 				tag = 0x02;
-			} else if (tag_str == 9){
+			} else if (tag_str == 2){
 				tag = 0x03;
 			} else {
 				System.out.println("bad N");
@@ -82,11 +82,11 @@ class TrafficGenerator_impr {
 				 *  Write line to output file 
 				 */
 				long time_delta = Ftime - last_frame_time;
-				time_delta = time_delta / N_scale;
-				long timer = 0;
+				long timeToWait = time_delta * 1000;
+				timeToWait = timeToWait / N_scale;
+				
 				long start_time = System.nanoTime();
-				while ((System.nanoTime() - start_time)/1000 < time_delta){;}
-				long waited = System.nanoTime() - start_time;
+				while ((System.nanoTime() - start_time) < timeToWait){;}
 				last_frame_time = Ftime;
 				
 				mySender.send(Fsize, tag);
