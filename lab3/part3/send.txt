@@ -1,3 +1,0 @@
-Packet to Send = 3
-Packet to Send = 1
-Packet to Send = 1
