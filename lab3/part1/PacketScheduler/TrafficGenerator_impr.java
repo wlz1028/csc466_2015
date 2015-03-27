@@ -44,46 +44,40 @@ class TrafficGenerator_impr {
 			pout = new PrintStream (fout);
 			
 			ArrayList<String> input_content = new ArrayList<String>();
-			while ( (currentLine = bis.readLine()) != null) { 
-				input_content.add(currentLine);
+			ArrayList<Long> Ftime = new ArrayList<Long>();
+			ArrayList<Integer> Fsize = new ArrayList<Integer>();
 			
+			while ( (currentLine = bis.readLine()) != null) { 
+				StringTokenizer st = new StringTokenizer(currentLine); 
+				String col1 = st.nextToken(); 
+				String col2 = st.nextToken(); 
+				String col3  = st.nextToken(); 
+
+				Ftime.add(Long.parseLong(col2));
+				Fsize.add(Integer.parseInt(col3));
 			}
 			System.out.println("finshied reading");
 			/*
 			 *  Read file line-by-line until the end of the file 
 			 */
-			long sum_time = 0;
-                        for (String _currentLine: input_content) {
-				
+			Long N_scale = Long.parseLong(args[0]);
+
+			long time_delta,timeToWait,start_time,end_time;
+                        for (int i=0; i<Ftime.size();i++) {
 				/*
 				 *  Parse line and break up into elements 
 				 */
-				StringTokenizer st = new StringTokenizer(_currentLine); 
-				String col1 = st.nextToken(); 
-				String col2 = st.nextToken(); 
-				String col3  = st.nextToken(); 
-
-				int SeqNo = Integer.parseInt(col1);
-				Long Ftime = Long.parseLong(col2);
-				int Fsize = Integer.parseInt(col3);
-				Long N_scale = Long.parseLong(args[0]);
 				/*
 				 *  Write line to output file 
 				 */
-				long time_delta = Ftime - last_frame_time;
-				long timeToWait = time_delta * 1000;
+				timeToWait = (Ftime.get(i) - last_frame_time) * 1000;
 				timeToWait = timeToWait / N_scale;
 				
-				long start_time = System.nanoTime();
-//				while ((System.nanoTime() - start_time) < timeToWait){;}
-				while(true){
-//					if (timeToWait < 25000){break;}
-					if (System.nanoTime()-start_time > timeToWait){break;}
+				start_time = System.nanoTime();
+				while ((System.nanoTime() - start_time) < timeToWait){;}
+				last_frame_time = Ftime.get(i);
 				
-				}
-				last_frame_time = Ftime;
-				
-				mySender.send(Fsize); 
+				mySender.send(Fsize.get(i)); 
 			}
 		} catch (IOException e) {  
 			// catch io errors from FileInputStream or readLine()  

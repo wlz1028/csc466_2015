@@ -5,7 +5,7 @@ import java.util.*;
 public class TrafficSink {
   public static void main(String[] args) throws IOException {
 
-	DatagramSocket socket = new DatagramSocket(4445);
+	DatagramSocket socket = new DatagramSocket(4444);
 	byte[] buf = new byte[1024];
 	DatagramPacket p = new DatagramPacket(buf, buf.length);
 	long previsuTime = 0;
