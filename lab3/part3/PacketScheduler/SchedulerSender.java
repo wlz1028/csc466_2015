@@ -97,7 +97,7 @@ public class SchedulerSender implements Runnable
 	public void run()
 	{
 		float[] L = {100.0f,100.0f,100.0f};
-		float[] w = {3.0f, 1.0f, 1.0f};
+		float[] w = {1.0f, 1.0f, 1.0f};
 
 		float[] x = new float[3];
 		float Xmin = Float.MAX_VALUE;
@@ -123,9 +123,9 @@ public class SchedulerSender implements Runnable
 
 		
 		try{
-			PrintStream[] pOut = {new PrintStream (new FileOutputStream("send_q_1_2.txt")),
-						new PrintStream (new FileOutputStream("send_q_2_2.txt")),
-						new PrintStream (new FileOutputStream("send_q_3_2.txt")),
+			PrintStream[] pOut = {new PrintStream (new FileOutputStream("send_q_1_1.txt")),
+						new PrintStream (new FileOutputStream("send_q_2_1.txt")),
+						new PrintStream (new FileOutputStream("send_q_3_1.txt")),
 						};
 
 			while(true)
