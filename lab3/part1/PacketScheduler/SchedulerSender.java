@@ -124,7 +124,7 @@ public class SchedulerSender implements Runnable
 					if ((packet = buffers[0].peek()) != null)
 					{
 						sendPacket(packet, startTime);
-						pOut.println(System.nanoTime());
+						pOut.println(System.nanoTime()+"\t"+packet.getLength());
 						buffers[0].removePacket();
 					}
 					else
