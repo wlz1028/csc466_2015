@@ -32,7 +32,7 @@ class TrafficGenerator_impr {
 			/*
 			 * Open input file as a BufferedReader
 			 */ 
-			File fin = new File("poisson3.data");
+			File fin = new File("short_poisson3.data");
 			FileReader fis = new FileReader(fin);
 			bis = new BufferedReader(fis);
 			Sender mySender = new Sender("127.0.0.1");
@@ -75,8 +75,12 @@ class TrafficGenerator_impr {
 				timeToWait = timeToWait / N_scale;
 				
 				long start_time = System.nanoTime();
-				while ((System.nanoTime() - start_time) < timeToWait){;}
-//				System.out.println(System.nanoTime()-start_time);
+//				while ((System.nanoTime() - start_time) < timeToWait){;}
+				while(true){
+//					if (timeToWait < 25000){break;}
+					if (System.nanoTime()-start_time > timeToWait){break;}
+				
+				}
 				last_frame_time = Ftime;
 				
 				mySender.send(Fsize); 
