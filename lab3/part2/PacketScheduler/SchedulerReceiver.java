@@ -84,7 +84,6 @@ public class SchedulerReceiver implements Runnable
 					pOut.print(bufferSize + "\t");
 				}
 				pOut.println();
-				pOut_rec.println(System.nanoTime());
 				
 				/*
 				 * Process packet.
@@ -101,6 +100,7 @@ public class SchedulerReceiver implements Runnable
 //					System.err.println("Packet dropped (queue full).");
 					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + q0+"\t"+q1);
 				} else {
+					pOut_rec.println(System.nanoTime());
 					pOut_discard.println((startTime-previsuTime)/1000 + "\t" + packet.getLength() + "\t" + 0 + "\t"+ 0);
 				}
 				previsuTime = startTime;

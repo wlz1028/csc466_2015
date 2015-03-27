@@ -75,7 +75,7 @@ public class PacketScheduler implements Runnable
 		//numBuffer
 		2,
 		//maxPacketSize
-		1480,
+		1500,
 		//bufferCapacities
 		bufferCapacities,
 		//fileName
