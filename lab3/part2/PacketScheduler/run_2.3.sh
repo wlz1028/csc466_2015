@@ -13,7 +13,7 @@ cd ..
 java PacketScheduler/PacketScheduler &
 pid2=$!
 cd -
-#java TrafficGenerator_impr $N &
+java TrafficGenerator_impr $N &
 pid3=$!
 java TrafficGenerator_video &
 pid4=$!
@@ -23,6 +23,8 @@ echo "Finish..."
 cp out.txt out_2.3_N_"$N".txt
 cp ../discard_PacketScheduler.txt ../PacketScheduler_discard_2.3_N_"$N".txt
 cp ../PacketScheduler.txt ../PacketScheduler_2.3_N_"$N".txt
+cp ../rec_PacketScheduler.txt ../rec_PacketScheduler_2.3_N_"$N".txt
+cp ../send_PacketScheduler.txt ../send_PacketScheduler_2.3_N_"$N".txt
 kill $pid1 $pid2 $pid3
 sleep 1
 echo ""

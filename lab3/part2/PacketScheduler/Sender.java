@@ -5,10 +5,16 @@ public class Sender {
 
   public int port = 4444;
   public InetAddress addr = null;
+  public DatagramPacket packet = null;
+  public DatagramSocket socket = null;
+  public byte[] buf = null;
 
 
   public Sender(String ip) throws IOException{
     this.addr = InetAddress.getByName(ip);
+    byte[] buf = new byte[2000];
+    this.packet = new DatagramPacket(buf, 0, addr, port);
+    this.socket = new DatagramSocket();
   }
 
 	public void send(int fSize, byte tag) throws IOException {
@@ -21,14 +27,10 @@ public class Sender {
 			sendSize = 1480-1;
 			fSize = fSize - sendSize;
 		}
-		
-		byte[]      buf  = new byte[sendSize+1];
+		buf  = new byte[sendSize+1];
 		buf[0] = tag;
-		DatagramPacket packet =
-			new DatagramPacket(buf, buf.length, addr, port);
-		DatagramSocket socket = new DatagramSocket();
+		packet.setData(buf);
 		socket.send(packet);
-		socket.close();
 		}
 	}
 }
