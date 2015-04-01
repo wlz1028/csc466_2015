@@ -29,8 +29,6 @@ public class TrafficReceiver implements Runnable
 		{
 			socket = new DatagramSocket(port);
 			byte[] buf = new byte[L];
-			DatagramPacket packet = 
-				new DatagramPacket(buf, buf.length);
 			int noTokens;
 			long bufferSize;
 
@@ -40,24 +38,30 @@ public class TrafficReceiver implements Runnable
 			long start_time = 0;
 			long previsuTime = 0;
 			long rec_ts = 0;
-			int send_ts = 0;
+			Long[] times;
 			int seqNo = 0;
 			
 			// receive and put packets in buffer (or send immediately)
 			while (true)
 			{	
+				DatagramPacket packet =
+					new DatagramPacket(buf, buf.length);
 				socket.receive(packet);
-				start_time = System.nanoTime();
+//				start_time = System.nanoTime();
 				
-				if ( previsuTime == 0 ){
-					previsuTime = start_time;
-				}
+//				if ( previsuTime == 0 ){
+//					previsuTime = start_time;
+//				}
 				//record seqNo and timestamp to hashtable
-				rec_ts = (int) (start_time - previsuTime)/1000;
+//				rec_ts = (int) (start_time - previsuTime)/1000;
 				seqNo = fromByteArray(packet.getData(),2,2);
-				send_ts = ts.getSendTime(seqNo);
-
-				pOut.println(seqNo+"\t"+send_ts+"\t"+rec_ts);
+				System.out.println("Got seq = "+seqNo);
+				times = ts.getSendTime(seqNo-1);
+				System.out.println("Get "+times[0]+"\t"+times[1]);
+				System.out.println("Now " + System.nanoTime());
+//
+				pOut.println(seqNo+"\t"+times[0]+"\t"+(System.nanoTime()-times[1])/1000);
+//				System.out.println("* get "+packet.getLength());
 				previsuTime = start_time;
 			}
 		} 
@@ -68,8 +72,7 @@ public class TrafficReceiver implements Runnable
 		}	
 	}
 
-	public static int fromByteArray(byte [] value, int start, int length)
-	{
+	public static int fromByteArray(byte [] value, int start, int length) {
 		int Return = 0;
 		for (int i=start; i< start+length; i++)
 		{

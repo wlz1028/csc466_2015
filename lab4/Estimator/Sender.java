@@ -31,6 +31,7 @@ public class Sender {
 		}
 		System.arraycopy(toByteArray(seqNo),2,buf,2,2);
 		packet.setData(buf);
+//		System.out.println("send"+TrafficReceiver.fromByteArray(packet.getData(),2,2));
 		socket.send(packet);
 		}
 	}
