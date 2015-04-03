@@ -55,7 +55,8 @@ public class TokenBucketReceiver implements Runnable
 				byte[] buf = new byte[Buffer.MAX_PACKET_SIZE];
 				DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
-				socket.receive(packet);	
+				socket.receive(packet);
+//				System.out.println("hah");
 				int noTokens = bucket.getNoTokens();
 				long bufferSize = buffer.getSizeInBytes();
 						

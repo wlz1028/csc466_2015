@@ -17,8 +17,11 @@ public class Estimator implements Runnable
 	
 	public Estimator(int N, int L, long r)
 	{
-		ts = new TrafficSender(N, L, r, "localhost", 4444, "ts_out.txt");
-		tr = new TrafficReceiver(ts,4444,L,"tr_our.txt");
+		String fName;
+		fName = "ts_out_N_"+N+"_L_"+L+"_r_"+r+".txt";
+		ts = new TrafficSender(N,L,r,"localhost",4444,fName);
+		fName = "tr_out_N_"+N+"_L_"+L+"_r_"+r+".txt";
+		tr = new TrafficReceiver(ts,4445,L,N,fName);
 	}
 	
 	/**

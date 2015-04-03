@@ -14,7 +14,8 @@ public class Sender {
 	public Sender(int L, String ip, int port) throws IOException{
 		this.addr = InetAddress.getByName(ip);
 		this.buf = new byte[L];
-		System.arraycopy(toByteArray(port),2,buf,0,2);
+		System.arraycopy(toByteArray(port+1),2,buf,0,2);
+		System.out.println(TrafficReceiver.fromByteArray(buf, 0, 2));
 		this.packet = new DatagramPacket(buf, 0, addr, port);
 		this.socket = new DatagramSocket();
   }
@@ -35,13 +36,14 @@ public class Sender {
 		socket.send(packet);
 		}
 	}
-
-	public static byte[] toByteArray(int value){
-		byte [] Result = new byte[4];
+	public static byte[] toByteArray(int value)
+	{
+		byte[] Result = new byte[4];
 		Result[3] = (byte) ((value >>> (8*0)) & 0xFF);
-		Result[2] = (byte) ((value >>> (8*2)) & 0xFF);
-		Result[1] = (byte) ((value >>> (8*1)) & 0xFF);
+		Result[2] = (byte) ((value >>> (8*1)) & 0xFF);
+		Result[1] = (byte) ((value >>> (8*2)) & 0xFF);
 		Result[0] = (byte) ((value >>> (8*3)) & 0xFF);
 		return Result;
 	}
+
 }

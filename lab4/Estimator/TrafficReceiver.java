@@ -13,13 +13,15 @@ public class TrafficReceiver implements Runnable
 	private int L;
 	private FileOutputStream fOut;
 	private PrintStream pOut;
+	private int N;
 
-	public TrafficReceiver(TrafficSender ts, int port, int L, String fileName)
+	public TrafficReceiver(TrafficSender ts, int port, int L, int N, String fileName)
 	{
 		this.ts = ts;
 		this.fileName = fileName;
 		this.port = port;
 		this.L = L;
+		this.N = N;
 	}
 
 	public void run()
@@ -35,34 +37,18 @@ public class TrafficReceiver implements Runnable
 			fOut = new FileOutputStream(fileName);
 			pOut = new PrintStream (fOut);
 
-			long start_time = 0;
-			long previsuTime = 0;
-			long rec_ts = 0;
-			Long[] times;
 			int seqNo = 0;
-			
+			DatagramPacket packet =
+				new DatagramPacket(buf, buf.length);
 			// receive and put packets in buffer (or send immediately)
-			while (true)
+			int n = 0;
+			while (n < N)
 			{	
-				DatagramPacket packet =
-					new DatagramPacket(buf, buf.length);
 				socket.receive(packet);
-//				start_time = System.nanoTime();
-				
-//				if ( previsuTime == 0 ){
-//					previsuTime = start_time;
-//				}
-				//record seqNo and timestamp to hashtable
-//				rec_ts = (int) (start_time - previsuTime)/1000;
+
 				seqNo = fromByteArray(packet.getData(),2,2);
-				System.out.println("Got seq = "+seqNo);
-				times = ts.getSendTime(seqNo-1);
-				System.out.println("Get "+times[0]+"\t"+times[1]);
-				System.out.println("Now " + System.nanoTime());
-//
-				pOut.println(seqNo+"\t"+times[0]+"\t"+(System.nanoTime()-times[1])/1000);
-//				System.out.println("* get "+packet.getLength());
-				previsuTime = start_time;
+				pOut.println(seqNo+"\t"+ts.getLastTime()/1000+"\t"+(System.nanoTime()-ts.getStartTime())/1000);
+				n++;
 			}
 		} 
 		catch (Exception e)
