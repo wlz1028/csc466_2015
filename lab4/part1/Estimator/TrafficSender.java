@@ -60,6 +60,7 @@ public class TrafficSender implements Runnable{
 					last_send_time = System.nanoTime() - start_time;
 					pOut.println(i+"\t"+last_send_time);
 				}
+				System.out.println(i);
 				sender.send(L, i);
 
 				ts = System.nanoTime();

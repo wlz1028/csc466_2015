@@ -67,7 +67,7 @@ public class TokenBucketSender implements Runnable
 			if (packet.getLength()>2)
 			{
 				portNumber = fromByteArray(packet.getData(), 0, 2);
-				System.out.println("port= "+portNumber);
+//				System.out.println("port= "+portNumber);
 				if (portNumber<=0)
 				{
 					portNumber = defaultSenderPort;
