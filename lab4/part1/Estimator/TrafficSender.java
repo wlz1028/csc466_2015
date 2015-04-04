@@ -14,7 +14,7 @@ public class TrafficSender implements Runnable{
 	private String host;
 	private int port;
 	private long start_time;
-	private long last_send_time;
+	private long[] last_send_time;
 
 	//in nanosec
 	private int pktTimeIntv;
@@ -29,23 +29,25 @@ public class TrafficSender implements Runnable{
 		this.L = L;
 		this.r = r;
 		this.pktTimeIntv = (int)((((double) L*8)/((double) r*1000))*1000000000);
+		System.out.println("Pkt time int: "+pktTimeIntv);
 		this.fileName = fileName;
 		this.host = host;
 		this.port = port;
+		last_send_time = new long[N];
 	}
 
-	public synchronized Long getStartTime(){
+	public synchronized long getStartTime(){
 		return start_time;
 	}
 
-	public synchronized Long getLastTime(){
-		return last_send_time;
+	public synchronized Long getLastTime(int seqNo){
+		return last_send_time[seqNo];
 	}
 
 	public void run()
 	{
 		long ts = 0;
-		last_send_time = 0;
+		last_send_time[0] = 0;
 
 		try{
 			fOut = new FileOutputStream(fileName);
@@ -53,14 +55,14 @@ public class TrafficSender implements Runnable{
 			sender = new Sender(L, host, port);
 			this.start_time = System.nanoTime();
 
-			for(int i=1; i<=N; i++){
-				if (i == 1){
-					pOut.println(1+"\t"+last_send_time);
+			for(int i=0; i<N; i++){
+				if (i == 0){
+					pOut.println(1+"\t"+last_send_time[0]/1000);
 				} else {
-					last_send_time = System.nanoTime() - start_time;
-					pOut.println(i+"\t"+last_send_time);
+					last_send_time[i] = System.nanoTime() - start_time;
+					pOut.println((i+1)+"\t"+last_send_time[i]/1000);
 				}
-				System.out.println(i);
+//				System.out.println(i);
 				sender.send(L, i);
 
 				ts = System.nanoTime();
