@@ -42,12 +42,18 @@ public class TrafficReceiver implements Runnable
 				new DatagramPacket(buf, buf.length);
 			// receive and put packets in buffer (or send immediately)
 			int n = 0;
+			long rec_time = 0l;
+			long start_time = 0l;
 			while (n < N)
 			{	
 				socket.receive(packet);
+				if (start_time == 0) {
+					start_time = ts.getStartTime();
+				}
 
 				seqNo = fromByteArray(packet.getData(),2,2);
-				pOut.println(seqNo+"\t"+ts.getLastTime()/1000+"\t"+(System.nanoTime()-ts.getStartTime())/1000);
+				rec_time = (System.nanoTime()-start_time)/1000;
+				pOut.println(seqNo+"\t"+ts.getLastTime(n)/1000+"\t"+rec_time);
 				n++;
 			}
 		} 
