@@ -1,7 +1,10 @@
 import os
 
-N = 1000
-L = 100
+#N = 1000
+#L = 100
+
+N = 1000 * 2
+L = 100 * 2
 
 def find_B_max(r):
     tr_file = "tr_out_N_%d_L_%d_r_%d.txt"%(N,L,r)
@@ -31,7 +34,7 @@ if __name__ == "__main__":
     B_max_prev = 0
     S = []
     os.system("./make.sh")
-    for r in [960, 980,1000,1020,1040,1060, 1080]:
+    for r in [980,1000,1020,1040,1060, 1080]:
 #    for r in [900*1000,1000*1000,1100*1000]:
         cmd = "./launch_prob.sh %d %d %d  "%(N,L,r)
         print "run r = " + str(r)
