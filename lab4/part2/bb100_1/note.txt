@@ -1,0 +1,3 @@
+size 740
+1000 pkts
+max outrate(R)) is 76 no matter how you increase r
